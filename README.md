@@ -9,7 +9,7 @@
 ![alt text](https://raw.githubusercontent.com/grburgess/pypa_synch/master/docs/media/logo.png)
 
 
-An astromodels implementation of the pictch angle synchrotron model
+An astromodels implementation of the pitch angle synchrotron model
 
 
 * Free software: GNU General Public License v3
