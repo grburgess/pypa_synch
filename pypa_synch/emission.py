@@ -42,20 +42,19 @@ def pa_emission(
 
     # convolve the electron with the synchrotron kernel
 
-    out = (
-        np.dot(
-            np.ascontiguousarray(s_matrix),
-            pa_distribution(
-                electron_grid,
-                gamma_b=gamma_min,
-                gamma_c=gamma_cool,
-                gamma_inj=gamma_inj,
-                gamma_max=gamma_max,
-                p=p,
-            ),
-        )
-        / (2.0 * photon_energy)
+    val = (
+        pa_distribution(
+            electron_grid,
+            gamma_b=gamma_min,
+            gamma_c=gamma_cool,
+            gamma_inj=gamma_inj,
+            gamma_max=gamma_max,
+            p=p,
+        )[1:]
+        * np.diff(electron_grid)
     )
+
+    out = np.dot(np.ascontiguousarray(s_matrix[:, 1:]), val) / (2.0 * photon_energy)
 
     return out
 
@@ -94,19 +93,18 @@ def fast_cooling_emission(
 
     # convolve the electron with the synchrotron kernel
 
-    out = (
-        np.dot(
-            np.ascontiguousarray(s_matrix),
-            fast_cooling_distribution(
-                electron_grid,
-                gamma_c=gamma_cool,
-                gamma_inj=gamma_inj,
-                gamma_max=gamma_max,
-                p=p,
-            ),
-        )
-        / (2.0 * photon_energy)
+    val = (
+        fast_cooling_distribution(
+            electron_grid,
+            gamma_c=gamma_cool,
+            gamma_inj=gamma_inj,
+            gamma_max=gamma_max,
+            p=p,
+        )[1:]
+        * np.diff(electron_grid)
     )
+
+    out = np.dot(np.ascontiguousarray(s_matrix[:, 1:]), val) / (2.0 * photon_energy)
 
     return out
 
@@ -144,17 +142,16 @@ def slow_cooling_emission(
 
     # convolve the electron with the synchrotron kernel
 
-    out = (
-        np.dot(
-            np.ascontiguousarray(s_matrix),
-            slow_cooling_distribution(
-                electron_grid,
-                gamma_inj=gamma_inj,
-                gamma_max=gamma_max,
-                p=p,
-            ),
-        )
-        / (2.0 * photon_energy)
+    val = (
+        slow_cooling_distribution(
+            electron_grid,
+            gamma_inj=gamma_inj,
+            gamma_max=gamma_max,
+            p=p,
+        )[1:]
+        * np.diff(electron_grid)
     )
+
+    out = np.dot(np.ascontiguousarray(s_matrix[:, 1:]), val) / (2.0 * photon_energy)
 
     return out

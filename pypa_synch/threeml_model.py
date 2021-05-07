@@ -67,7 +67,7 @@ class PitchAngleSynchrotron(Function1D, metaclass=FunctionMeta):
 
     def _set_units(self, x_unit, y_unit):
 
-        self.K.unit = y_unit / u.gauss
+        self.K.unit = y_unit
 
         self.B.unit = u.gauss
 
@@ -89,14 +89,14 @@ class PitchAngleSynchrotron(Function1D, metaclass=FunctionMeta):
             flag = True
 
             B_ = B.value
-            gamma_min_ = gamma_min.value
-            gamma_max_ = gamma_max.value
-            gamma_inj_ = gamma_inj.value
+            gamma_min_ = float(gamma_min.value)
+            gamma_max_ = float(gamma_max.value)
+            gamma_inj_ = float(gamma_inj.value)
             bulk_gamma_ = bulk_gamma.value
-            gamma_cool_ = gamma_cool.value
-            index_ = index.value
+            gamma_cool_ = float(gamma_cool.value)
+            index_ = float(index.value)
             unit_ = self.y_unit
-            K_ = K.value
+            K_ = float(K.value)
 
             try:
                 flag = False
@@ -123,15 +123,15 @@ class PitchAngleSynchrotron(Function1D, metaclass=FunctionMeta):
                 bulk_gamma_,
                 gamma_inj_,
             ) = (
-                K,
-                B,
-                gamma_min,
-                gamma_cool,
-                gamma_max,
-                index,
+                float(K),
+                float(B),
+                float(gamma_min),
+                float(gamma_cool),
+                float(gamma_max),
+                float(index),
                 x,
-                bulk_gamma,
-                gamma_inj,
+                float(bulk_gamma),
+                float(gamma_inj),
             )
             unit_ = 1.0
 
@@ -203,7 +203,7 @@ class FastCoolingSynchrotron(Function1D, metaclass=FunctionMeta):
 
     def _set_units(self, x_unit, y_unit):
 
-        self.K.unit = y_unit / u.gauss
+        self.K.unit = y_unit
 
         self.B.unit = u.gauss
 
@@ -221,14 +221,14 @@ class FastCoolingSynchrotron(Function1D, metaclass=FunctionMeta):
 
             flag = True
 
-            B_ = B.value
-            gamma_max_ = gamma_max.value
-            gamma_inj_ = gamma_inj.value
-            bulk_gamma_ = bulk_gamma.value
-            gamma_cool_ = gamma_cool.value
-            index_ = index.value
+            B_ = float(B.value)
+            gamma_max_ = float(gamma_max.value)
+            gamma_inj_ = float(gamma_inj.value)
+            bulk_gamma_ = float(bulk_gamma.value)
+            gamma_cool_ = float(gamma_cool.value)
+            index_ = float(index.value)
             unit_ = self.y_unit
-            K_ = K.value
+            K_ = float(K.value)
 
             try:
                 flag = False
@@ -245,14 +245,14 @@ class FastCoolingSynchrotron(Function1D, metaclass=FunctionMeta):
             flag = False
 
             K_, B_, gamma_cool_, gamma_max_, index_, x_, bulk_gamma_, gamma_inj_ = (
-                K,
-                B,
-                gamma_cool,
-                gamma_max,
-                index,
+                float(K),
+                float(B),
+                float(gamma_cool),
+                float(gamma_max),
+                float(index),
                 x,
-                bulk_gamma,
-                gamma_inj,
+                float(bulk_gamma),
+                float(gamma_inj),
             )
             unit_ = 1.0
 
@@ -316,7 +316,7 @@ class SlowCoolingSynchrotron(Function1D, metaclass=FunctionMeta):
 
     def _set_units(self, x_unit, y_unit):
 
-        self.K.unit = y_unit / u.gauss
+        self.K.unit = y_unit
 
         self.B.unit = u.gauss
 
@@ -334,12 +334,12 @@ class SlowCoolingSynchrotron(Function1D, metaclass=FunctionMeta):
             flag = True
 
             B_ = B.value
-            gamma_max_ = gamma_max.value
-            gamma_inj_ = gamma_inj.value
-            bulk_gamma_ = bulk_gamma.value
-            index_ = index.value
+            gamma_max_ = float(gamma_max.value)
+            gamma_inj_ = float(gamma_inj.value)
+            bulk_gamma_ = float(bulk_gamma.value)
+            index_ = float(index.value)
             unit_ = self.y_unit
-            K_ = K.value
+            K_ = float(K.value)
 
             try:
                 flag = False
@@ -356,13 +356,13 @@ class SlowCoolingSynchrotron(Function1D, metaclass=FunctionMeta):
             flag = False
 
             K_, B_, gamma_max_, index_, x_, bulk_gamma_, gamma_inj_ = (
-                K,
-                B,
-                gamma_max,
-                index,
+                float(K),
+                float(B),
+                float(gamma_max),
+                float(index),
                 x,
-                bulk_gamma,
-                gamma_inj,
+                float(bulk_gamma),
+                float(gamma_inj),
             )
             unit_ = 1.0
 
