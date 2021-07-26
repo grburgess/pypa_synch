@@ -436,14 +436,12 @@ class AnisotropicSynchrotron(Function1D, metaclass=FunctionMeta):
 
 
         self.amplitude.unit = u.dimensionless_unscaled
-        
-        self.gamma_inj.unit = u.dimensionless_unscaled
-        
+        self.gamma_inj.unit = u.dimensionless_unscaled        
         self.gamma_max.unit = u.dimensionless_unscaled
         self.bulk_gamma.unit = u.dimensionless_unscaled
         self.index.unit = u.dimensionless_unscaled
 
-    def evaluate(self, x, K, amplitude, B, index, gamma_inj, gamma_max, bulk_gamma):
+    def evaluate(self, x, K B, amplitude, index, gamma_inj, gamma_max, bulk_gamma):
 
         n_grid_points: int = 100
 
