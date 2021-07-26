@@ -477,7 +477,7 @@ class AnisotropicSynchrotron(Function1D, metaclass=FunctionMeta):
             K_, B_, amplitude_,  gamma_max_, index_, x_, bulk_gamma_, gamma_inj_ = (
                 float(K),
                 float(B),
-                float(amplitude)
+                float(amplitude),
                 float(gamma_max),
                 float(index),
                 x,
