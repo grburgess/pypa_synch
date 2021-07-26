@@ -230,7 +230,7 @@ def compute_synchtron_matrix(
 
         for j in range(n_grid_points):
 
-            sin_alpha_ = anisotropy(np.sqrt(gamma2[j]), amplitude, gamma_inj)
+            sin_alpha = anisotropy(np.sqrt(gamma2[j]), amplitude, gamma_inj)
             
             arg2 = arg1 / ( gamma2[j] * sin_alpha**2)
 
