@@ -19,21 +19,43 @@ def pa_emission(
     bulk_lorentz_factor: float,
     n_grid_points: int = 100,
 ) -> np.ndarray:
+    """TODO describe function
 
+    :param photon_energy: 
+    :type photon_energy: ArrayLike
+    :param B: 
+    :type B: float
+    :param p: 
+    :type p: float
+    :param gamma_min: 
+    :type gamma_min: float
+    :param gamma_cool: 
+    :type gamma_cool: float
+    :param gamma_inj: 
+    :type gamma_inj: float
+    :param gamma_max: 
+    :type gamma_max: float
+    :param bulk_lorentz_factor: 
+    :type bulk_lorentz_factor: float
+    :param n_grid_points: 
+    :type n_grid_points: int
+    :returns: 
+
+    """
     n_photon_points: int = photon_energy.shape[0]
 
     # create a log10 grid of photon energies
     # do this in linspace because numba is stupid
 
     electron_grid = np.power(
-        10.0, np.linspace(np.log10(gamma_min), np.log10(gamma_max), n_grid_points)
-    )
+        10.0,
+        np.linspace(np.log10(gamma_min), np.log10(gamma_max), n_grid_points))
 
     # compute the
 
     s_matrix = compute_synchtron_matrix(
         energy=photon_energy,
-        gamma2=electron_grid ** 2,
+        gamma2=electron_grid**2,
         B=B,
         bulk_lorentz_factor=bulk_lorentz_factor,
         n_photon_energies=n_photon_points,
@@ -42,19 +64,17 @@ def pa_emission(
 
     # convolve the electron with the synchrotron kernel
 
-    val = (
-        pa_distribution(
-            electron_grid,
-            gamma_b=gamma_min,
-            gamma_c=gamma_cool,
-            gamma_inj=gamma_inj,
-            gamma_max=gamma_max,
-            p=p,
-        )[1:]
-        * np.diff(electron_grid)
-    )
+    val = (pa_distribution(
+        electron_grid,
+        gamma_b=gamma_min,
+        gamma_c=gamma_cool,
+        gamma_inj=gamma_inj,
+        gamma_max=gamma_max,
+        p=p,
+    )[1:] * np.diff(electron_grid))
 
-    out = np.dot(np.ascontiguousarray(s_matrix[:, 1:]), val) / (2.0 * photon_energy)
+    out = np.dot(np.ascontiguousarray(s_matrix[:, 1:]),
+                 val) / (2.0 * photon_energy)
 
     return out
 
@@ -77,8 +97,8 @@ def fast_cooling_emission(
     # do this in linspace because numba is stupid
 
     electron_grid = np.power(
-        10.0, np.linspace(np.log10(gamma_cool), np.log10(gamma_max), n_grid_points)
-    )
+        10.0,
+        np.linspace(np.log10(gamma_cool), np.log10(gamma_max), n_grid_points))
 
     # compute the
 
@@ -129,6 +149,7 @@ def slow_cooling_emission(
         10.0, np.linspace(np.log10(gamma_inj), np.log10(gamma_max), n_grid_points)
     )
 
+    
     # compute the
 
     s_matrix = compute_synchtron_matrix(
@@ -155,3 +176,57 @@ def slow_cooling_emission(
     out = np.dot(np.ascontiguousarray(s_matrix[:, 1:]), val) / (2.0 * photon_energy)
 
     return out
+
+
+@nb.njit(fastmath=True)
+def anisotropic_emission(
+    photon_energy: ArrayLike,
+    B: float,
+    p: float,
+    gamma_inj: float,
+    gamma_max: float,
+    bulk_lorentz_factor: float,
+    amplitude: 0.,    
+    n_grid_points: int = 100,
+) -> np.ndarray:
+
+    n_photon_points: int = photon_energy.shape[0]
+
+    # create a log10 grid of photon energies
+    # do this in linspace because numba is stupid
+
+    electron_grid = np.power(
+        10.0, np.linspace(np.log10(gamma_inj), np.log10(gamma_max), n_grid_points)
+    )
+
+    
+    # compute the
+
+    s_matrix = compute_synchtron_matrix(
+        energy=photon_energy,
+        gamma2=electron_grid ** 2,
+        B=B,
+        bulk_lorentz_factor=bulk_lorentz_factor,
+        n_photon_energies=n_photon_points,
+        n_grid_points=n_grid_points,
+        amplitude=amplitude,
+        gamma_inj=gamma_inj
+        
+    )
+
+    # convolve the electron with the synchrotron kernel
+
+    val = (
+        slow_cooling_distribution(
+            electron_grid,
+            gamma_inj=gamma_inj,
+            gamma_max=gamma_max,
+            p=p,
+        )[1:]
+        * np.diff(electron_grid)
+    )
+
+    out = np.dot(np.ascontiguousarray(s_matrix[:, 1:]), val) / (2.0 * photon_energy)
+
+    return out
+

@@ -10,7 +10,10 @@ from .electron_distribution import (fast_cooling_distribution, pa_distribution,
                                     slow_cooling_distribution)
 from .emission import fast_cooling_emission, pa_emission, slow_cooling_emission
 from .threeml_model import (FastCoolingSynchrotron, PitchAngleSynchrotron,
-                            SlowCoolingSynchrotron)
+                            SlowCoolingSynchrotron,
+                            AnisotropicSynchrotron,
+
+                            )
 
 __version__ = get_versions()["version"]
 del get_versions

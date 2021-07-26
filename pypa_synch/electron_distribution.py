@@ -63,8 +63,7 @@ def fast_cooling_distribution(
     gamma: ArrayLike, gamma_c: float, gamma_inj: float, gamma_max: float, p: float
 ):
     """
-
-    steady state fast-cooling electron distribution
+    Steady state fast-cooling electron distribution.
 
     :param gamma:
     :type gamma: ArrayLike
