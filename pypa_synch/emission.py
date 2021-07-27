@@ -186,7 +186,8 @@ def anisotropic_emission(
     gamma_inj: float,
     gamma_max: float,
     bulk_lorentz_factor: float,
-    amplitude: 0.,    
+    amplitude=0., 
+    delta=0.2,
     n_grid_points: int = 100,
 ) -> np.ndarray:
 
@@ -210,7 +211,7 @@ def anisotropic_emission(
         n_photon_energies=n_photon_points,
         n_grid_points=n_grid_points,
         amplitude=amplitude,
-        gamma_inj=gamma_inj
+        gamma_inj=gamma_inj, delta=delta
         
     )
 

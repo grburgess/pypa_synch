@@ -187,9 +187,9 @@ def synchrotron_kernel(x):
 
 
 @nb.njit(fastmath=True)
-def anisotropy(gamma, amplitude, gamma_inj):
+def anisotropy(gamma, amplitude, gamma_inj, delta):
     
-    return 1. - amplitude * np.exp(- (gamma/gamma_inj-1)**2)
+    return 1. - amplitude * np.exp(- (gamma/gamma_inj-1)**2 / delta)
     
     
     
@@ -197,7 +197,7 @@ def anisotropy(gamma, amplitude, gamma_inj):
     
 @nb.njit(fastmath=True, parallel=False)
 def compute_synchtron_matrix(
-        energy, gamma2, B, bulk_lorentz_factor, n_photon_energies, n_grid_points, amplitude=0., gamma_inj=1e5,
+        energy, gamma2, B, bulk_lorentz_factor, n_photon_energies, n_grid_points, amplitude=0., gamma_inj=1e5, delta=0.2
 ):
     """
     compute the evaluation of the synchrotron kernel
@@ -230,7 +230,7 @@ def compute_synchtron_matrix(
 
         for j in range(n_grid_points):
 
-            sin_alpha = anisotropy(np.sqrt(gamma2[j]), amplitude, gamma_inj)
+            sin_alpha = anisotropy(np.sqrt(gamma2[j]), amplitude, gamma_inj, delta)
             
             arg2 = arg1 / ( gamma2[j] * sin_alpha**2)
 

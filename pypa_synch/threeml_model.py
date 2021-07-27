@@ -401,6 +401,13 @@ class AnisotropicSynchrotron(Function1D, metaclass=FunctionMeta):
             min : .0
             max: .999
 
+        delta :
+            desc : amplitude of the anisotrpy
+            initial value : 0.2
+            min : 1E-99
+            fix: true
+
+    
         index:
             desc : spectral index of electrons
             initial value : 2.224
@@ -436,12 +443,13 @@ class AnisotropicSynchrotron(Function1D, metaclass=FunctionMeta):
 
 
         self.amplitude.unit = u.dimensionless_unscaled
+        self.delta.unit = u.dimensionless_unscaled
         self.gamma_inj.unit = u.dimensionless_unscaled        
         self.gamma_max.unit = u.dimensionless_unscaled
         self.bulk_gamma.unit = u.dimensionless_unscaled
         self.index.unit = u.dimensionless_unscaled
 
-    def evaluate(self, x, K, B, amplitude, index, gamma_inj, gamma_max, bulk_gamma):
+    def evaluate(self, x, K, B, amplitude, delta, index, gamma_inj, gamma_max, bulk_gamma):
 
         n_grid_points: int = 100
 
@@ -451,6 +459,7 @@ class AnisotropicSynchrotron(Function1D, metaclass=FunctionMeta):
 
             B_ = B.value
             amplitude_ = amplitude.value
+            delta_ = delta.value
             gamma_max_ = float(gamma_max.value)
             gamma_inj_ = float(gamma_inj.value)
             bulk_gamma_ = float(bulk_gamma.value)
@@ -472,10 +481,11 @@ class AnisotropicSynchrotron(Function1D, metaclass=FunctionMeta):
 
             flag = False
 
-            K_, B_, amplitude_,  gamma_max_, index_, x_, bulk_gamma_, gamma_inj_ = (
+            K_, B_, amplitude_, delta_,  gamma_max_, index_, x_, bulk_gamma_, gamma_inj_ = (
                 float(K),
                 float(B),
                 float(amplitude),
+                float(delta),
                 float(gamma_max),
                 float(index),
                 x,
@@ -492,6 +502,7 @@ class AnisotropicSynchrotron(Function1D, metaclass=FunctionMeta):
             gamma_max_,
             bulk_gamma_,
             amplitude_,
+            delta_,
             n_grid_points,
         )
 
