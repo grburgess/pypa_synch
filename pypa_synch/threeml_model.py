@@ -391,7 +391,7 @@ class PICSynchrotron(Function1D, metaclass=FunctionMeta):
 
         B :
             desc : energy scaling
-            initial value : 1E2
+            initial value : 1E7
             min : .01
 
         amplitude :
@@ -408,9 +408,8 @@ class PICSynchrotron(Function1D, metaclass=FunctionMeta):
     
         index:
             desc : spectral index of electrons
-            initial value : 2.224
-            min : 2.
-            max : 6
+            initial value : -2.9
+            max : 0
 
         gamma_inj :
              desc: cooling time of electrons
