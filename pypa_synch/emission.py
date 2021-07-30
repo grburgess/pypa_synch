@@ -315,7 +315,8 @@ def thermal_emission(
     # create a log10 grid of photon energies
     # do this in linspace because numba is stupid
 
-    gamma_max = 1e3
+    gamma_max = 1e4
+    gamma_inj = 1e2
     
     electron_grid = np.power(
         10.0, np.linspace(0, np.log10(gamma_max), n_grid_points)
@@ -332,7 +333,8 @@ def thermal_emission(
         n_photon_energies=n_photon_points,
         n_grid_points=n_grid_points,
         amplitude=amplitude,
-        gamma_inj=gamma_inj, delta=delta
+        gamma_inj=gamma_inj,
+        delta=delta
         
     )
 
