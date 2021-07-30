@@ -11,7 +11,7 @@ from .electron_distribution import (fast_cooling_distribution, pa_distribution,
 from .emission import fast_cooling_emission, pa_emission, slow_cooling_emission
 from .threeml_model import (FastCoolingSynchrotron, PitchAngleSynchrotron,
                             SlowCoolingSynchrotron,
-                            AnisotropicSynchrotron, PICSynchrotron
+                            AnisotropicSynchrotron, PICSynchrotron, ThermalSynchrotron
 
                             )
 

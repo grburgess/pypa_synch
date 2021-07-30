@@ -3,7 +3,7 @@ import astropy.units as u
 import numpy as np
 from astromodels import Function1D, FunctionMeta
 
-from .emission import fast_cooling_emission, pa_emission, slow_cooling_emission, anisotropic_emission, pic_emission
+from .emission import fast_cooling_emission, pa_emission, slow_cooling_emission, anisotropic_emission, pic_emission, thermal_emission
 
 __author__ = "grburgess"
 
@@ -548,6 +548,131 @@ class PICSynchrotron(Function1D, metaclass=FunctionMeta):
 
         return K * out
 
+
+class ThermalSynchrotron(Function1D, metaclass=FunctionMeta):
+    r"""
+    description :
+        Synchrotron emission from anisotropic electrions
+    latex : $  $
+    parameters :
+        K :
+            desc : normalization
+            initial value : 1
+            min : 0
+
+        B :
+            desc : energy scaling
+            initial value : 1E7
+            min : .01
+
+        amplitude :
+            desc : amplitude of the anisotrpy
+            initial value : 0.
+            min : .0
+            max: .999
+
+        delta :
+            desc : width of the anisotropy
+            initial value : 0.2
+            min : 1E-99
+            fix: true
+        kT :
+            desc : maximum electron lorentz factor
+            initial value : 1.
+            min : 1
+            fix: false
+
+        bulk_gamma:
+            desc : bulk Lorentz factor
+            initial value : 100
+            min : 1.
+            fix: yes
+
+    """
+
+    #    __metaclass__ = FunctionMeta
+
+    def _set_units(self, x_unit, y_unit):
+
+        self.K.unit = y_unit
+
+        self.B.unit = u.gauss
+
+
+        self.amplitude.unit = u.dimensionless_unscaled
+        self.delta.unit = u.dimensionless_unscaled
+
+        self.kT.unit = u.dimensionless_unscaled
+
+        self.bulk_gamma.unit = u.dimensionless_unscaled
+        
+
+    def evaluate(self, x, K, B, amplitude, delta, kT, bulk_gamma):
+
+        n_grid_points: int = 100
+
+        if isinstance(K, u.Quantity):
+
+            flag = True
+
+
+            K_ = float(K.value)
+            B_ = B.value
+
+            amplitude_ = amplitude.value
+            delta_ = delta.value
+
+            kT_ = float(kT.value)
+
+            bulk_gamma_ = float(bulk_gamma.value)
+            
+            unit_ = self.y_unit
+            
+
+            try:
+                flag = False
+                tmp = len(x)
+
+                x_ = x.value
+
+            except:
+                flag = True
+                x_ = np.array([x.value])
+
+        else:
+
+            flag = False
+
+            K_, B_, amplitude_, delta_,  x_, bulk_gamma__ = (
+                float(K),
+                float(B),
+                float(amplitude),
+                float(delta),
+
+                x,
+                float(bulk_gamma),
+
+            )
+
+
+            kT_ = float(kT)
+
+            
+            unit_ = 1.0
+
+        out = thermal_emission(
+            x_,
+            B_,
+            kT_,
+            bulk_gamma_,
+            amplitude_,
+            delta_,
+            n_grid_points,
+        )
+
+        return K * out
+
+    
     
 class AnisotropicSynchrotron(Function1D, metaclass=FunctionMeta):
     r"""

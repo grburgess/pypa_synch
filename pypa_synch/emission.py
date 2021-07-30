@@ -3,7 +3,7 @@ import numpy as np
 from numpy.typing import ArrayLike
 
 from .electron_distribution import (fast_cooling_distribution, pa_distribution,
-                                    slow_cooling_distribution, pic_distribution)
+                                    slow_cooling_distribution, pic_distribution, model_maxwell)
 from .synchrotron_utils import compute_synchtron_matrix
 
 
@@ -290,6 +290,60 @@ def pic_emission(
             
             
         )[1:]
+        * np.diff(electron_grid)
+    )
+
+    out = np.dot(np.ascontiguousarray(s_matrix[:, 1:]), val) / (2.0 * photon_energy)
+
+    return out
+
+
+
+@nb.njit(fastmath=True)
+def thermal_emission(
+    photon_energy: ArrayLike,
+    B: float,
+    kt: float,
+    bulk_lorentz_factor: float,
+    amplitude=0., 
+    delta=0.2,
+    n_grid_points: int = 100,
+) -> np.ndarray:
+
+    n_photon_points: int = photon_energy.shape[0]
+
+    # create a log10 grid of photon energies
+    # do this in linspace because numba is stupid
+
+    gamma_max = 1e3
+    
+    electron_grid = np.power(
+        10.0, np.linspace(0, np.log10(gamma_max), n_grid_points)
+    )
+
+    
+    # compute the
+
+    s_matrix = compute_synchtron_matrix(
+        energy=photon_energy,
+        gamma2=electron_grid ** 2,
+        B=B,
+        bulk_lorentz_factor=bulk_lorentz_factor,
+        n_photon_energies=n_photon_points,
+        n_grid_points=n_grid_points,
+        amplitude=amplitude,
+        gamma_inj=gamma_inj, delta=delta
+        
+    )
+
+    # convolve the electron with the synchrotron kernel
+
+    K1 = 1
+    
+    val = (
+        model_maxwell(x=electron_grid,
+                      K=K1,
+                      kt=kt )[1:]
         * np.diff(electron_grid)
     )
 

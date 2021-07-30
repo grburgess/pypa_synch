@@ -1,4 +1,4 @@
-import numba as nb
+timport numba as nb
 import numpy as np
 from numpy.typing import ArrayLike
 
@@ -13,9 +13,9 @@ def pa_distribution(
     p: float,
 ):
     """
+    
     double broken power law describing the steady state electron distribution
     where IC cooling dominates below the synchrotron cooling energy
-
 
     :param gamma:
     :type gamma: ArrayLike
@@ -28,7 +28,7 @@ def pa_distribution(
     :param gamma_max:
     :type gamma_max: float
     :param p:
-    :type p: float
+     :type p: float
     :returns:
 
     """
