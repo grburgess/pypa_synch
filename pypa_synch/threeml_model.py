@@ -618,14 +618,10 @@ class ThermalSynchrotron(Function1D, metaclass=FunctionMeta):
 
             K_ = float(K.value)
             B_ = B.value
-
             amplitude_ = amplitude.value
             delta_ = delta.value
-
             kT_ = float(kT.value)
-
             bulk_gamma_ = float(bulk_gamma.value)
-            
             unit_ = self.y_unit
             
 
@@ -643,17 +639,12 @@ class ThermalSynchrotron(Function1D, metaclass=FunctionMeta):
 
             flag = False
 
-            K_, B_, amplitude_, delta_,  x_, bulk_gamma__ = (
-                float(K),
-                float(B),
-                float(amplitude),
-                float(delta),
-
-                x,
-                float(bulk_gamma),
-
-            )
-
+            K_ = float(K)
+            B_ = float(B)
+            amplitude_ = float(amplitude)
+            delta_ = float(delta)
+            x_ = x
+            bulk_gamma_ = float(bulk_gamma)
 
             kT_ = float(kT)
 
