@@ -17,6 +17,8 @@ def pa_emission(
     gamma_inj: float,
     gamma_max: float,
     bulk_lorentz_factor: float,
+    amplitude=0., 
+    delta=0.2,
     n_grid_points: int = 100,
 ) -> np.ndarray:
     """TODO describe function
@@ -60,6 +62,10 @@ def pa_emission(
         bulk_lorentz_factor=bulk_lorentz_factor,
         n_photon_energies=n_photon_points,
         n_grid_points=n_grid_points,
+        gamma_inj=gamma_inj,
+        amplitude=amplitude,
+        delta=delta
+        
     )
 
     # convolve the electron with the synchrotron kernel

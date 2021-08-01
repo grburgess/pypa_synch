@@ -24,6 +24,20 @@ class PitchAngleSynchrotron(Function1D, metaclass=FunctionMeta):
             initial value : 1E2
             min : .01
 
+       amplitude :
+            desc : amplitude of the anisotrpy
+            initial value : 0.
+            min : .0
+            max: .999
+            fix: true
+
+       delta :
+            desc : width of the anisotropy
+            initial value : 0.2
+            min : 1E-99
+            fix: true
+
+
         index:
             desc : spectral index of electrons
             initial value : 2.224
@@ -75,10 +89,14 @@ class PitchAngleSynchrotron(Function1D, metaclass=FunctionMeta):
         self.gamma_inj.unit = u.dimensionless_unscaled
         self.gamma_max.unit = u.dimensionless_unscaled
         self.bulk_gamma.unit = u.dimensionless_unscaled
+
+        self.amplitude.unit = u.dimensionaless_unscaled
+        self.delta.unit = u.dimensionless_unscaled
+        
         self.index.unit = u.dimensionless_unscaled
 
     def evaluate(
-        self, x, K, B, index, gamma_min, gamma_cool, gamma_inj, gamma_max, bulk_gamma
+            self, x, K, B, amplitude, delta, index, gamma_min, gamma_cool, gamma_inj, gamma_max, bulk_gamma
     ):
 
         n_grid_points: int = 100
@@ -88,6 +106,8 @@ class PitchAngleSynchrotron(Function1D, metaclass=FunctionMeta):
             flag = True
 
             B_ = B.value
+            amplitude_ = amplitude.value
+            delta_ = delta.value
             gamma_min_ = float(gamma_min.value)
             gamma_max_ = float(gamma_max.value)
             gamma_inj_ = float(gamma_inj.value)
@@ -132,6 +152,10 @@ class PitchAngleSynchrotron(Function1D, metaclass=FunctionMeta):
                 float(bulk_gamma),
                 float(gamma_inj),
             )
+
+            amplitude_ = float(amplitude)
+            delta_ = float(delta)
+            
             unit_ = 1.0
 
         out = pa_emission(
@@ -143,6 +167,8 @@ class PitchAngleSynchrotron(Function1D, metaclass=FunctionMeta):
             gamma_inj_,
             gamma_max_,
             bulk_gamma_,
+            amplitude_,
+            delta_,
             n_grid_points,
         )
 
