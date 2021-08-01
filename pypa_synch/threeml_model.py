@@ -90,7 +90,7 @@ class PitchAngleSynchrotron(Function1D, metaclass=FunctionMeta):
         self.gamma_max.unit = u.dimensionless_unscaled
         self.bulk_gamma.unit = u.dimensionless_unscaled
 
-        self.amplitude.unit = u.dimensionaless_unscaled
+        self.amplitude.unit = u.dimensionless_unscaled
         self.delta.unit = u.dimensionless_unscaled
         
         self.index.unit = u.dimensionless_unscaled
