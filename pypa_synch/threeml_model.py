@@ -24,14 +24,14 @@ class PitchAngleSynchrotron(Function1D, metaclass=FunctionMeta):
             initial value : 1E2
             min : .01
 
-       amplitude :
+        amplitude :
             desc : amplitude of the anisotrpy
             initial value : 0.
             min : .0
             max: .999
             fix: true
 
-       delta :
+        delta :
             desc : width of the anisotropy
             initial value : 0.2
             min : 1E-99
